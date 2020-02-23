@@ -1,0 +1,35 @@
+job('job_dsl_created'){
+  
+  description('My first job')
+
+  parameters{
+  	stringParam('Planet', defaultValue= 'world', description = 'This is the world' )
+    booleanParam('FLAG', true)
+    choiceParam('OPTION',['option 1 (default)', 'option 2','option 3'])
+    
+  }
+  
+  scm{
+  	git('https://github.com/teohaik/ast-demo.git', 'master')
+  }
+  
+  triggers{
+  	cron('H 5 * * 7')
+  }
+  
+  steps{
+  	shell("""
+
+echo 'Hello world!!! '
+
+echo 'running script...'
+		
+""")
+  }
+	
+  publishers{
+   
+    mailer('teohaik@gmail.com', true, true)
+  }
+  
+}
